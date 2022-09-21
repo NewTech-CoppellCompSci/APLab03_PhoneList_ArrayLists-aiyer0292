@@ -1,5 +1,6 @@
 package phoneList;
 
+
 /*
  * This contains info for a single contact
  * 
@@ -20,5 +21,37 @@ package phoneList;
 
 
 public class Contact {
+
+	private String name;
+	private String phoneNum;
+	
+	public Contact(String name, String phoneNum) {
+		this.name = name;
+		this.phoneNum = phoneNum;
+	}
+
+	public Contact(String name) {
+		this.name = name;
+		phoneNum = "(000)000-0000";
+	}
+
+	public Contact() {
+		name = "Unknown";
+		phoneNum = "(000)000-0000";
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+	
+	@Override
+	public String toString() {
+		return "Name: " + getName()
+			+ "\n Phone Number: " + getPhoneNum();
+	}
 
 }

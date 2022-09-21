@@ -1,5 +1,6 @@
 package phoneList;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -26,15 +27,16 @@ import java.util.Scanner;
 
 public class PhoneList {
 
-	/*
+	 /*
 	 * Instance Variables
 	 */
-	
-	
+	ArrayList<Contact> contacts = new ArrayList<Contact>();
 	
 	//Constructor
-	public PhoneList() {
+	public PhoneList(ArrayList<Contact> list) {
 		//initialize instance variables
+		contacts = list;
+		
 	}
 	
 	
@@ -49,11 +51,50 @@ public class PhoneList {
 	 *   - tell the user what the new contact is and that 
 	 *        it's been added
 	 */
-	public static void addContact() {
-		
-		
-	}
+	public void addContact() {
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter Name for Contact: ");
+		String name = input.nextLine();
 	
+		
+		
+		System.out.print("Enter Phone Number for Contact: ");
+		String phoneNum = input.nextLine();
+		
+
+		Contact c1 = new Contact(name, phoneNum);
+		
+		int x = 0;
+		for(int i = 0; i < contacts.size(); i++){
+			if(compare(c1, contacts.get(i)) >= 0){
+				contacts.add(i, c1);
+				x = 1;
+			}
+		}
+
+		if(x == 0) {contacts.add(c1);}
+
+	}
+
+	public int compare(Contact c1, Contact listC){
+		int a = c1.getName().length();
+		int b = listC.getName().length();
+		int min = Math.min(a, b);
+
+		for(int i = 0; i < min; i++){
+			int c1_ch = (int)c1.getName().charAt(i);
+			int listC_ch = (int)listC.getName().charAt(i);
+
+			if(c1_ch < listC_ch){
+				return 1;
+			}
+			else if(c1_ch > listC_ch){
+				return -1;
+			}
+		}
+
+		return 0;
+	}
 	
 	
 	/*
@@ -70,8 +111,19 @@ public class PhoneList {
 	 *        Remove the item from the list
 	 *        
 	 */
-	public static void removeContact() {
-		
+	public void removeContact() {
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter Contact Name: ");
+		String name = input.nextLine();
+
+		for(int i = 0; i < contacts.size(); i++){
+			if(name == contacts.get(i).getName()){
+				contacts.remove(i);
+			}
+			else{
+				System.out.println("Name was not found in Contancts :(");
+			}
+		}
 		
 	}
 	
@@ -87,8 +139,13 @@ public class PhoneList {
 	 *          -----------------
 	 *          #################
 	 */
-	public static void printList() {
+	public void printList() {
+		System.out.println("Contacts: \n \n");
 		
+		for(int i = 0; i < contacts.size(); i++){
+			System.out.println(contacts.get(i).toString());
+			System.out.println("\n ************************ \n");
+		}
 	}
 
 	
@@ -101,7 +158,7 @@ public class PhoneList {
 	 * of how to manage them.
 	 * 
 	 */
-	public static void menu() {
+	public void menu() {
 		
 		int input = 0;
 		
@@ -155,7 +212,7 @@ public class PhoneList {
 		
 	}
 	
-	public static String getString(String str) {
+	public String getString(String str) {
 		
 		Scanner inKey = new Scanner(System.in);
 		System.out.print(str);  //notice it's NOT a print line.  This way input is next to question.
@@ -164,8 +221,4 @@ public class PhoneList {
 	}
 	
 	
-	public static void main(String[] args) {
-		PhoneList app = new PhoneList();
-		app.menu();
-	}
 }
